@@ -11,14 +11,20 @@ class News extends Component {
   }
 
   render() {
+    if (this.props.news.length === 0) {
+      return (
+        <div className="section">
+          <div className="container">
+            <h1>Fetching News...</h1>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="section">
         <div className="container">
-          <div className="columns">
-            <div className="column is-3">
-              <NewsList />
-            </div>
-          </div>
+          <NewsList news={this.props.news} />
         </div>
       </div>
     );
