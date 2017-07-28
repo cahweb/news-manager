@@ -6,8 +6,10 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import ReduxPromise from 'redux-promise';
 
 import reducers from './reducers';
-import App from './components/app';
 import './main.scss';
+
+import Nav from './components/nav';
+import News from './components/news';
 
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
 
@@ -15,8 +17,9 @@ ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
     <BrowserRouter>
       <div>
+        <Nav />
         <Switch>
-          <Route path="/" component={App} />
+          <Route path="/" component={News} />
         </Switch>
       </div>
     </BrowserRouter>
