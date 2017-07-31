@@ -10,6 +10,7 @@ import './main.scss';
 
 import Nav from './components/nav';
 import News from './components/news';
+import NewsSingle from './components/news-single';
 
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
 
@@ -19,6 +20,7 @@ ReactDOM.render(
       <div>
         <Nav />
         <Switch>
+          <Route path="/news/:slug" component={NewsSingle} />
           <Route path="/" component={News} />
         </Switch>
       </div>

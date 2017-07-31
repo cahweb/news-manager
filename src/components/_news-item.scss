@@ -1,0 +1,35 @@
+.card {
+  transition: all 0.5s ease;
+
+  &:hover {
+    background-color: $grey-lighter;
+  }
+}
+
+.featured-image {
+  background-size: cover;
+}
+
+.approval {
+  padding: 0.4rem 0.5rem;
+  border-radius: .2rem;
+  color: $white;
+}
+
+.approved {
+  background-color: $success;
+}
+
+.not-approved {
+  background-color: $danger;
+}
+
+.card-content .content br {
+  line-height: 2;
+}
+
+.excerpt p {
+  overflow-y: hidden;
+  height: 4.5em;
+  margin-bottom: 1em;
+}
