@@ -4,9 +4,27 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 
 class NewsItem extends Component {
+  extractHostname(url) {
+    let hostname;
+    //find & remove protocol (http, ftp, etc.) and get hostname
+
+    if (url.indexOf('://') > -1) {
+      hostname = url.split('/')[2];
+    } else {
+      hostname = url.split('/')[0];
+    }
+
+    //find & remove port number
+    hostname = hostname.split(':')[0];
+    //find & remove "?"
+    hostname = hostname.split('?')[0];
+
+    return hostname;
+  }
+
   render() {
     return (
-      <Link to={`/news/${this.props.item.slug}`}>
+      <Link to={`/news/${this.extractHostname(this.props.item.link)}/${this.props.item.id}`}>
         <div className="card">
           <div className="card-image">
             <figure

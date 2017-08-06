@@ -20,7 +20,7 @@ ReactDOM.render(
       <div>
         <Nav />
         <Switch>
-          <Route path="/news/:slug" component={NewsSingle} />
+          <Route path="/news/:hostname/:id" component={NewsSingle} />
           <Route path="/" component={News} />
         </Switch>
       </div>
