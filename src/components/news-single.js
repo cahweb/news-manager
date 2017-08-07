@@ -8,6 +8,9 @@ class NewsSingle extends Component {
   constructor(props) {
     super(props);
 
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.toggleCheckbox = this.toggleCheckbox.bind(this);
+
     this.state = {
       newsSingle: {}
     };
@@ -19,6 +22,42 @@ class NewsSingle extends Component {
 
     axios.get(`http://${url}/wp-json/wp/v2/news/${id}`).then(res => {
       this.setState({ newsSingle: res.data });
+    });
+  }
+
+  onFormSubmit(e) {
+    e.preventDefault();
+    const url = this.props.match.params.hostname;
+    const id = this.props.match.params.id;
+    const { title, excerpt, content } = this.refs;
+
+    axios
+      .post(
+        `http://${url}/wp-json/wp/v2/news`,
+        {
+          title: title.value,
+          excerpt: excerpt.getEditorContents(),
+          content: content.getEditorContents(),
+          approved: this.state.newsSingle.approved === 'yes' ? 'on' : ''
+        },
+        {
+          auth: {
+            username: 'cahweb',
+            password: 'CAH_web?'
+          }
+        }
+      )
+      .then(res => {
+        console.log(res.data);
+      });
+  }
+
+  toggleCheckbox() {
+    this.setState({
+      newsSingle: {
+        ...this.state.newsSingle,
+        approved: this.state.newsSingle.approved === 'yes' ? 'no' : 'yes'
+      }
     });
   }
 
@@ -77,7 +116,8 @@ class NewsSingle extends Component {
                     <input
                       ref="approved"
                       type="checkbox"
-                      defaultChecked={this.state.newsSingle.approved === 'yes' ? 'checked' : ''}
+                      onChange={this.toggleCheckbox}
+                      checked={this.state.newsSingle.approved === 'yes'}
                     />
                   </label>
                 </div>
