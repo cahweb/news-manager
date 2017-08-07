@@ -1,0 +1,113 @@
+{
+	"variables": [],
+	"info": {
+		"name": "News Edit Page",
+		"_postman_id": "a11ad939-890a-825d-af39-4253b3e9db9b",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/news",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"var token = jsonData.token;",
+							"postman.setEnvironmentVariable('token', token);"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}/wp-json/wp/v2/news",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"lachose1\",\n\t\"password\": \"foo\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "/news/id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"var token = jsonData.token;",
+							"postman.setEnvironmentVariable('token', token);"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}/wp-json/wp/v2/news/8",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"lachose1\",\n\t\"password\": \"foo\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "/news",
+			"request": {
+				"url": "{{url}}/wp-json/wp/v2/news",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic YWxlYW5nZWwxMjEyOm14ZXJteGVy",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\":\"Nigerian\",\n\t\"excerpt\":\"Oh nigerian\",\n\t\"content\":\"this is content\",\n\t\"approved\":\"on\",\n\t\"status\":\"publish\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "/news/id",
+			"request": {
+				"url": "{{url}}/wp-json/wp/v2/news/520",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
