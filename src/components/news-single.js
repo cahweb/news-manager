@@ -12,7 +12,8 @@ class NewsSingle extends Component {
     this.toggleCheckbox = this.toggleCheckbox.bind(this);
 
     this.state = {
-      newsSingle: {}
+      newsSingle: {},
+      loading: false
     };
   }
 
@@ -31,14 +32,16 @@ class NewsSingle extends Component {
     const id = this.props.match.params.id;
     const { title, excerpt, content } = this.refs;
 
+    this.setState({ loading: true });
+
     axios
-      .post(
-        `http://${url}/wp-json/wp/v2/news`,
+      .patch(
+        `http://${url}/wp-json/wp/v2/news/${id}`,
         {
           title: title.value,
-          excerpt: excerpt.getEditorContents(),
+          excerpt: excerpt.value,
           content: content.getEditorContents(),
-          approved: this.state.newsSingle.approved === 'yes' ? 'on' : ''
+          approved: this.state.newsSingle.approved === 'yes' ? 'on' : 'off'
         },
         {
           auth: {
@@ -48,7 +51,9 @@ class NewsSingle extends Component {
         }
       )
       .then(res => {
-        console.log(res.data);
+        if (res.status === 200) {
+          this.setState({ loading: false });
+        }
       });
   }
 
@@ -92,11 +97,31 @@ class NewsSingle extends Component {
               </div>
 
               <div className="field">
+                <label htmlFor="author" className="label">
+                  Author
+                </label>
+                <div className="control">
+                  <input
+                    className="input"
+                    type="text"
+                    ref="author"
+                    defaultValue={renderHTML(this.state.newsSingle.author)}
+                  />
+                </div>
+              </div>
+
+              <div className="field">
                 <label htmlFor="excerpt" className="label">
                   Excerpt
                 </label>
                 <div className="control">
-                  <ReactQuill ref="excerpt" defaultValue={this.state.newsSingle.excerpt.rendered} />
+                  <textarea
+                    className="textarea"
+                    ref="excerpt"
+                    rows="2"
+                    style={{ fontSize: '.8rem' }}
+                    defaultValue={this.state.newsSingle.excerpt.rendered}
+                  />
                 </div>
               </div>
 
@@ -125,7 +150,10 @@ class NewsSingle extends Component {
 
               <div className="field is-grouped">
                 <div className="control">
-                  <button className="button is-primary" type="submit">
+                  <button
+                    className={`button is-primary ${this.state.loading ? 'is-loading' : ''}`}
+                    type="submit"
+                  >
                     Submit
                   </button>
                 </div>

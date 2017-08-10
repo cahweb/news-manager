@@ -10,10 +10,3 @@ export function fetchNews() {
     payload: axios.get(API_URL)
   };
 }
-
-export function fetchSelectedNews(url, id) {
-  return {
-    type: FETCH_SELECTED_NEWS,
-    payload: axios.get(`https://${url}/wp-json/wp/v2/news/${id}`)
-  };
-}
