@@ -1,12 +1,21 @@
 import axios from 'axios';
 
-import { FETCH_NEWS, FETCH_SELECTED_NEWS } from './types';
+import { FETCH_NEWS, CLEAR_NEWS } from './types';
 
-const API_URL = 'https://www.cah.ucf.edu/wp-json/wp/v2/news';
+const URL_LIST = ['www.cah.ucf.edu', 'arts.cah.ucf.edu'];
 
 export function fetchNews() {
+  const requests = URL_LIST.map(url => axios.get(`http://${url}/wp-json/wp/v2/news?per_page=100`));
+
   return {
     type: FETCH_NEWS,
-    payload: axios.get(API_URL)
+    payload: axios.all(requests)
+  };
+}
+
+export function clearNews() {
+  return {
+    type: CLEAR_NEWS,
+    payload: []
   };
 }

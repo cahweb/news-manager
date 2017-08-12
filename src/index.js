@@ -19,6 +19,7 @@ ReactDOM.render(
     <BrowserRouter>
       <div>
         <Nav />
+        <div className="background" />
         <Switch>
           <Route path="/news/:hostname/:id" component={NewsSingle} />
           <Route path="/" component={News} />

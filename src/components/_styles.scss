@@ -1,9 +1,23 @@
-html,
-body,
-.container,
 .section {
-  background-color: $white-ter;
+  margin: 2rem 0;
 }
 
+.background {
+  top: 0;
+  left: 0;
+  position: fixed;
+  height: 100vh;
+  width: 100%;
+  background-image: url('http://az616578.vo.msecnd.net/files/2017/04/24/636286537353821723-1194774078_UCF-banner.jpg');
+  background-size: cover;
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+}
+
+@import "nav";
+@import "spinner";
 @import 'news-item';
 @import 'news-single';

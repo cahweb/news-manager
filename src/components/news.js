@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import NewsList from './news-list';
+import SpinnerList from './spinner-list';
 
 import * as actions from '../actions';
 
@@ -12,13 +13,7 @@ class News extends Component {
 
   render() {
     if (this.props.news.length === 0) {
-      return (
-        <div className="section">
-          <div className="container">
-            <h1>Fetching News...</h1>
-          </div>
-        </div>
-      );
+      return <SpinnerList />;
     }
 
     return (

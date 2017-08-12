@@ -3,6 +3,11 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import renderHTML from 'react-render-html';
+import { connect } from 'react-redux';
+
+import { auth } from '../config.json';
+
+import * as actions from '../actions';
 
 class NewsSingle extends Component {
   constructor(props) {
@@ -30,24 +35,24 @@ class NewsSingle extends Component {
     e.preventDefault();
     const url = this.props.match.params.hostname;
     const id = this.props.match.params.id;
-    const { title, excerpt, content } = this.refs;
+    const { title, excerpt, author, content } = this.refs;
 
     this.setState({ loading: true });
+
+    this.props.clearNews();
 
     axios
       .patch(
         `http://${url}/wp-json/wp/v2/news/${id}`,
         {
           title: title.value,
-          excerpt: excerpt.value,
+          author: author.value,
+          excerpt: excerpt.getEditorContents(),
           content: content.getEditorContents(),
           approved: this.state.newsSingle.approved === 'yes' ? 'on' : 'off'
         },
         {
-          auth: {
-            username: 'cahweb',
-            password: 'CAH_web?'
-          }
+          auth
         }
       )
       .then(res => {
@@ -71,7 +76,9 @@ class NewsSingle extends Component {
       return (
         <div className="section">
           <div className="container">
-            <h1>Loading...</h1>
+            <div className="card spinner-card">
+              <div className="spinner" />
+            </div>
           </div>
         </div>
       );
@@ -115,13 +122,7 @@ class NewsSingle extends Component {
                   Excerpt
                 </label>
                 <div className="control">
-                  <textarea
-                    className="textarea"
-                    ref="excerpt"
-                    rows="2"
-                    style={{ fontSize: '.8rem' }}
-                    defaultValue={this.state.newsSingle.excerpt.rendered}
-                  />
+                  <ReactQuill ref="excerpt" defaultValue={this.state.newsSingle.excerpt.rendered} />
                 </div>
               </div>
 
@@ -130,7 +131,11 @@ class NewsSingle extends Component {
                   Content
                 </label>
                 <div className="control">
-                  <ReactQuill ref="content" defaultValue={this.state.newsSingle.content.rendered} />
+                  <ReactQuill
+                    ref="content"
+                    className="content"
+                    defaultValue={this.state.newsSingle.content.rendered}
+                  />
                 </div>
               </div>
 
@@ -151,7 +156,7 @@ class NewsSingle extends Component {
               <div className="field is-grouped">
                 <div className="control">
                   <button
-                    className={`button is-primary ${this.state.loading ? 'is-loading' : ''}`}
+                    className={`button is-info ${this.state.loading ? 'is-loading' : ''}`}
                     type="submit"
                   >
                     Submit
@@ -171,4 +176,4 @@ class NewsSingle extends Component {
   }
 }
 
-export default NewsSingle;
+export default connect(null, actions)(NewsSingle);
