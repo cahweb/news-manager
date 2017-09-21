@@ -5,7 +5,7 @@ import ReactQuill from 'react-quill';
 import renderHTML from 'react-render-html';
 import { connect } from 'react-redux';
 
-import { auth } from '../config.json';
+import config from '../config.json';
 
 import * as actions from '../actions';
 
@@ -51,9 +51,7 @@ class NewsSingle extends Component {
           content: content.getEditorContents(),
           approved: this.state.newsSingle.approved === 'yes' ? 'on' : 'off'
         },
-        {
-          auth
-        }
+        config
       )
       .then(res => {
         if (res.status === 200) {
