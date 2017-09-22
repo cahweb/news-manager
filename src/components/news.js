@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import NewsList from './news-list';
@@ -12,9 +13,9 @@ class News extends Component {
   }
 
   render() {
-    if (this.props.news.length === 0) {
-      return <SpinnerList />;
-    }
+    if (!this.props.auth.loggedIn) return <Redirect to="/login" />;
+
+    if (this.props.news.length === 0) return <SpinnerList />;
 
     return (
       <div className="section">
@@ -27,7 +28,7 @@ class News extends Component {
 }
 
 function mapStateToProps(state) {
-  return { news: state.news };
+  return { news: state.news, auth: state.auth };
 }
 
 export default connect(mapStateToProps, actions)(News);

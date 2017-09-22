@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import renderHTML from 'react-render-html';
 import { connect } from 'react-redux';
@@ -70,6 +70,8 @@ class NewsSingle extends Component {
   }
 
   render() {
+    if (!this.props.auth.loggedIn) return <Redirect to="/login" />;
+
     if (!this.state.newsSingle.id) {
       return (
         <div className="section">
@@ -174,4 +176,8 @@ class NewsSingle extends Component {
   }
 }
 
-export default connect(null, actions)(NewsSingle);
+function mapStateToProps(state) {
+  return { auth: state.auth };
+}
+
+export default connect(mapStateToProps, actions)(NewsSingle);

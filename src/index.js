@@ -13,6 +13,7 @@ import './main.scss';
 import Nav from './components/nav';
 import News from './components/news';
 import NewsSingle from './components/news-single';
+import Login from './components/login';
 
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
 
@@ -28,6 +29,7 @@ ReactDOM.render(
         <Nav />
         <div className="background" />
         <Switch>
+          <Route path="/login" component={Login} />
           <Route path="/news/:hostname/:id" component={NewsSingle} />
           <Route path="/" component={News} />
         </Switch>
