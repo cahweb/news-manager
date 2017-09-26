@@ -5,8 +5,6 @@ import ReactQuill from 'react-quill';
 import renderHTML from 'react-render-html';
 import { connect } from 'react-redux';
 
-import config from '../config.json';
-
 import * as actions from '../actions';
 
 class NewsSingle extends Component {
@@ -51,7 +49,11 @@ class NewsSingle extends Component {
           content: content.getEditorContents(),
           approved: this.state.newsSingle.approved === 'yes' ? 'on' : 'off'
         },
-        config
+        {
+          headers: {
+            Authorization: `Basic ${this.props.token}`
+          }
+        }
       )
       .then(res => {
         if (res.status === 200) {
@@ -70,7 +72,7 @@ class NewsSingle extends Component {
   }
 
   render() {
-    if (!this.props.auth.loggedIn) return <Redirect to="/login" />;
+    if (!this.props.loggedIn) return <Redirect to="/login" />;
 
     if (!this.state.newsSingle.id) {
       return (
@@ -177,7 +179,7 @@ class NewsSingle extends Component {
 }
 
 function mapStateToProps(state) {
-  return { auth: state.auth };
+  return { token: state.auth.token, loggedIn: state.auth.loggedIn };
 }
 
 export default connect(mapStateToProps, actions)(NewsSingle);
