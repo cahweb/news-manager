@@ -9,7 +9,9 @@ import * as actions from '../actions';
 
 class News extends Component {
   componentDidMount() {
-    this.props.fetchNews();
+    this.props.fetchSites().then(() => {
+      this.props.fetchNews();
+    });
   }
 
   render() {

@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import ReduxPromise from 'redux-promise';
+import ReduxThunk from 'redux-thunk';
 
 import reducers from './reducers';
 import './main.scss';
@@ -15,7 +16,7 @@ import News from './components/news';
 import NewsSingle from './components/news-single';
 import Login from './components/login';
 
-const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
+const createStoreWithMiddleware = applyMiddleware(ReduxPromise, ReduxThunk)(createStore);
 
 ReactDOM.render(
   <Provider
