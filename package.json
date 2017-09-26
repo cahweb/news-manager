@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": "git@github.com:aleangel1212/react-redux-starter.git",
   "scripts": {
-    "build": "npm run clean && webpack",
+    "build": "webpack -p",
     "watch": "webpack --progress --watch",
     "serve": "serve -s dist/"
   },
