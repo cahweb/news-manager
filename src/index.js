@@ -7,6 +7,8 @@ import { createStore, applyMiddleware } from 'redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import ReduxPromise from 'redux-promise';
 import ReduxThunk from 'redux-thunk';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 import reducers from './reducers';
 import './main.scss';
@@ -28,6 +30,7 @@ ReactDOM.render(
     <BrowserRouter>
       <div>
         <Nav />
+        <ToastContainer position="bottom-right" autoClose={3000} hideProgressBar />
         <div className="background" />
         <Switch>
           <Route path="/login" component={Login} />
