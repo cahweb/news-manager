@@ -4,7 +4,6 @@ import { Link, Redirect } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import renderHTML from 'react-render-html';
 import { connect } from 'react-redux';
-import { toast } from 'react-toastify';
 
 import * as actions from '../actions';
 
@@ -58,16 +57,20 @@ class NewsSingle extends Component {
       )
       .then(res => {
         if (res.status === 200) {
-          this.notification('Submitted!');
+          this.props.notify({
+            type: 'success',
+            text: 'Submitted!'
+          });
           this.setState({ loading: false });
         }
+      })
+      .catch(() => {
+        this.props.notify({
+          type: 'error',
+          text: 'Unable to submit form: invalid login'
+        });
+        this.setState({ loading: false });
       });
-  }
-
-  notification(text) {
-    toast(text, {
-      className: 'success-toast'
-    });
   }
 
   toggleCheckbox() {
@@ -174,7 +177,7 @@ class NewsSingle extends Component {
                 </div>
                 <div className="control">
                   <Link to="/" className="button is-link">
-                    Cancel
+                    Close
                   </Link>
                 </div>
               </div>

@@ -1,8 +1,23 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 import { FETCH_SITES, FETCH_NEWS, CLEAR_NEWS, LOGIN_USER } from './types';
 
-//const URL_LIST = ['www.cah.ucf.edu', 'arts.cah.ucf.edu'];
+export function notify(notification) {
+  return () => {
+    if (notification.type === 'success') {
+      toast(notification.text, {
+        className: 'success-toast'
+      });
+    }
+
+    if (notification.type === 'error') {
+      toast(notification.text, {
+        className: 'error-toast'
+      });
+    }
+  };
+}
 
 export function loginUser(username, password) {
   return {
