@@ -12,7 +12,6 @@ class NewsSingle extends Component {
     super(props);
 
     this.onFormSubmit = this.onFormSubmit.bind(this);
-    this.toggleCheckbox = this.toggleCheckbox.bind(this);
 
     this.state = {
       newsSingle: {},
@@ -33,7 +32,7 @@ class NewsSingle extends Component {
     e.preventDefault();
     const url = this.props.match.params.hostname;
     const id = this.props.match.params.id;
-    const { title, excerpt, author, content } = this.refs;
+    const { title, excerpt, author, content, approved } = this.refs;
 
     this.setState({ loading: true });
 
@@ -47,7 +46,7 @@ class NewsSingle extends Component {
           author: author.value,
           excerpt: excerpt.getEditorContents(),
           content: content.getEditorContents(),
-          approved: this.state.newsSingle.approved === 'yes' ? 'on' : 'off',
+          approved: parseInt(approved.value, 10),
         },
         {
           headers: {
@@ -71,15 +70,6 @@ class NewsSingle extends Component {
         });
         this.setState({ loading: false });
       });
-  }
-
-  toggleCheckbox() {
-    this.setState({
-      newsSingle: {
-        ...this.state.newsSingle,
-        approved: this.state.newsSingle.approved === 'yes' ? 'no' : 'yes',
-      },
-    });
   }
 
   render() {
@@ -154,15 +144,16 @@ class NewsSingle extends Component {
 
               <div className="field">
                 <div className="control">
-                  <label htmlFor="approved" className="checkbox">
-                    Approved:{'  '}
-                    <input
-                      ref="approved"
-                      type="checkbox"
-                      onChange={this.toggleCheckbox}
-                      checked={this.state.newsSingle.approved === 'yes'}
-                    />
+                  <label htmlFor="approved" className="label">
+                    Approval Level:
                   </label>
+                  <div className="select">
+                    <select ref="approved" defaultValue={this.state.newsSingle.approved}>
+                      <option value="3">CAH Front Page</option>
+                      <option value="2">CAH Newsroom and Child Pages</option>
+                      <option value="1">Child Pages</option>
+                    </select>
+                  </div>
                 </div>
               </div>
 
