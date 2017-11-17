@@ -16,7 +16,7 @@ class NewsSingle extends Component {
 
     this.state = {
       newsSingle: {},
-      loading: false
+      loading: false,
     };
   }
 
@@ -47,19 +47,19 @@ class NewsSingle extends Component {
           author: author.value,
           excerpt: excerpt.getEditorContents(),
           content: content.getEditorContents(),
-          approved: this.state.newsSingle.approved === 'yes' ? 'on' : 'off'
+          approved: this.state.newsSingle.approved === 'yes' ? 'on' : 'off',
         },
         {
           headers: {
-            Authorization: `Basic ${this.props.token}`
-          }
+            Authorization: `Basic ${this.props.token}`,
+          },
         }
       )
       .then(res => {
         if (res.status === 200) {
           this.props.notify({
             type: 'success',
-            text: 'Submitted!'
+            text: 'Submitted!',
           });
           this.setState({ loading: false });
         }
@@ -67,7 +67,7 @@ class NewsSingle extends Component {
       .catch(() => {
         this.props.notify({
           type: 'error',
-          text: 'Unable to submit form: invalid login'
+          text: 'Unable to submit form: invalid login',
         });
         this.setState({ loading: false });
       });
@@ -77,8 +77,8 @@ class NewsSingle extends Component {
     this.setState({
       newsSingle: {
         ...this.state.newsSingle,
-        approved: this.state.newsSingle.approved === 'yes' ? 'no' : 'yes'
-      }
+        approved: this.state.newsSingle.approved === 'yes' ? 'no' : 'yes',
+      },
     });
   }
 

@@ -22,6 +22,19 @@ class NewsItem extends Component {
     return hostname;
   }
 
+  renderApproved(approval) {
+    switch (approval) {
+      case 3:
+        return 'CAH Front Page';
+
+      case 2:
+        return 'CAH Newsroom and Child Pages';
+
+      default:
+        return 'Child Pages';
+    }
+  }
+
   render() {
     return (
       <Link to={`/news/${this.extractHostname(this.props.item.link)}/${this.props.item.id}`}>
@@ -30,32 +43,22 @@ class NewsItem extends Component {
             <figure
               className="image is-4by3 featured-image"
               style={{
-                backgroundImage: `url(${this.props.item.featured_media || '/img/empty.png'})`
+                backgroundImage: `url(${this.props.item.featured_media || '/img/empty.png'})`,
               }}
             />
           </div>
           <div className="card-content">
             <div className="media">
               <div className="media-content">
-                <p className="title is-5">
-                  {renderHTML(this.props.item.title.rendered)}
-                </p>
-                <p className="subtitle is-6">
-                  {this.props.item.site_name}
-                </p>
+                <p className="title is-5">{renderHTML(this.props.item.title.rendered)}</p>
+                <p className="subtitle is-6">{this.props.item.site_name}</p>
               </div>
             </div>
 
             <div className="content">
-              <small className="excerpt">
-                {renderHTML(this.props.item.excerpt.rendered)}
-              </small>
-              <small
-                className={`approval ${this.props.item.approved === 'yes'
-                  ? 'approved'
-                  : 'not-approved'}`}
-              >
-                {this.props.item.approved === 'yes' ? 'Approved' : 'Not Approved'}
+              <small className="excerpt">{renderHTML(this.props.item.excerpt.rendered)}</small>
+              <small className="approval approved">
+                {this.renderApproved(this.props.item.approved)}
               </small>
               <br />
               <small>
